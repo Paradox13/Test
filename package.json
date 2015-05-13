@@ -1,4 +1,8 @@
-"scripts": {
-  "start": "node http.js"
+"dependencies": {
+	"websocket":"",
+	"socket.io": ""
 },
-"main": "http.js"
+"scripts": {
+  "start": "node notify.js"
+},
+"main": "notify.js"
