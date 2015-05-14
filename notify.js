@@ -57,7 +57,6 @@ wsServer.on('request', function(request) {
     // we need to know client index to remove them on 'close' event
     var index = clients.push(connection) - 1;
     console.log(request.origin);
-	
 	console.log((new Date()) + ' Connection accepted.');
  
     // user sent some message
@@ -69,14 +68,9 @@ wsServer.on('request', function(request) {
  
     // user disconnected
     connection.on('close', function(connection) {
-        if (userName !== false && userColor !== false) {
-            console.log((new Date()) + " Peer "
-                + connection.remoteAddress + " disconnected.");
-            // remove user from the list of connected clients
-            clients.splice(index, 1);
-            // push back user's color to be reused by another user
-            colors.push(userColor);
-        }
+		console.log((new Date()) + " Peer " + connection.remoteAddress + " disconnected.");
+		// remove user from the list of connected clients
+		clients.splice(index, 1);
     });
  
 });
