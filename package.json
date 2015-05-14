@@ -1,8 +1,10 @@
-{"dependencies": {
-	"websocket":"",
-	"socket.io": ""
-},
-"scripts": {
-  "start": "node notify.js"
-},
-"main": "notify.js"}
+{
+	"dependencies": {
+		"websocket":"",
+		"socket.io": ""
+	},
+	"scripts": {
+		"start": "node notify.js"
+	},
+	"main": "notify.js"
+}
