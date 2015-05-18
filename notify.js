@@ -33,11 +33,11 @@ var server = http.createServer(function(request, response) {
 					if (clients[i].room == query['room']){
 						count++;
 						clients[i].sendUTF(body);
-				}
-			}	
+					}
+				}	
 			    //response.write("Sent to " + count + " clients in room " + query['room']);
 				console.log("Sent to " + count + " clients in room " + query['room']);
-				// use post['blah'], etc.
+				console.log("Body: " + body);
 			});
 			
 			
