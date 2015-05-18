@@ -14,7 +14,6 @@ var server = http.createServer(function(request, response) {
 	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	if (pathname == '/notify' && request.method == 'POST'){
-		console.log('here');
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		var query = url.parse(request.url, true).query;
 		if (query['room']!=null){
@@ -28,6 +27,9 @@ var server = http.createServer(function(request, response) {
 				if (body.length > 1e6)
 					request.connection.destroy();
 			});
+			
+			console.log('body now: ' + body);
+			
 			request.on('end', function () {
 				for (var i=0; i < clients.length; i++) {
 					if (clients[i].room == query['room']){
@@ -35,7 +37,7 @@ var server = http.createServer(function(request, response) {
 						clients[i].sendUTF(body);
 				}
 			}	
-			//response.write("Sent to " + count + " clients in room " + query['room']);
+			    //response.write("Sent to " + count + " clients in room " + query['room']);
 				console.log("Sent to " + count + " clients in room " + query['room']);
 				// use post['blah'], etc.
 			});
