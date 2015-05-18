@@ -10,22 +10,36 @@ var url = require("url");
 var clients = [ ];
 
 var server = http.createServer(function(request, response) {
-    var pathname = url.parse(request.url).pathname;
+    
+	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
-	if (pathname == '/notify'){
+	if (pathname == '/notify' && request.method == 'POST'){
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		var query = url.parse(request.url, true).query;
-		console.log(query);
 		if (query['room']!=null){
 			var count = 0;
-			for (var i=0; i < clients.length; i++) {
-				if (clients[i].room == query['room']){
-					count++;
-					clients[i].sendUTF(query['data']);
+			
+			var body = '';
+			request.on('data', function (data) {
+				body += data;
+
+				// Too much POST data, kill the connection!
+				if (body.length > 1e6)
+					request.connection.destroy();
+			});
+			request.on('end', function () {
+				for (var i=0; i < clients.length; i++) {
+					if (clients[i].room == query['room']){
+						count++;
+						clients[i].sendUTF(body);
 				}
 			}	
-			response.write("Sent to " + count + " clients in room " + query['room']);
-			console.log("Sent to " + count + " clients in room " + query['room']);
+			//response.write("Sent to " + count + " clients in room " + query['room']);
+				console.log("Sent to " + count + " clients in room " + query['room']);
+				// use post['blah'], etc.
+			});
+			
+			
 		}
 		else{
 			response.write("Room not specified");
