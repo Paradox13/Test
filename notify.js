@@ -17,6 +17,8 @@ var server = http.createServer(function(request, response) {
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		var query = url.parse(request.url, true).query;
 		if (query['room']!=null){
+			
+			console.log('notify for room: ' +  query['room']);
 			var count = 0;
 			
 			var body = '';
