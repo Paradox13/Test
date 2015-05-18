@@ -16,10 +16,21 @@ var server = http.createServer(function(request, response) {
 		response.writeHead(200, {"Content-Type": "text/plain"});
 		var query = url.parse(request.url, true).query;
 		console.log(query);
-		for (var i=0; i < clients.length; i++) {
-				clients[i].sendUTF(query['data']);
-			}
-		response.write("Sent to " + clients.length + " clients");
+		if (query['room']!=null){
+			var count = 0;
+			for (var i=0; i < clients.length; i++) {
+				if (clients[i].room == query['room']){
+					count++;
+					clients[i].sendUTF(query['data']);
+				}
+			}	
+			response.write("Sent to " + count + " clients in room " + query['room']);
+			console.log("Sent to " + count + " clients in room " + query['room']);
+		}
+		else{
+			response.write("Room not specified");
+			console.log("trying to send data without room");
+		}
 		response.end();
 	}
 	else{
@@ -58,9 +69,11 @@ wsServer.on('request', function(request) {
     var index = clients.push(connection) - 1;
     console.log(request.origin);
 	console.log((new Date()) + ' Connection accepted.');
- 
     // user sent some message
-    connection.on('message', function(message) {
+    var query = url.parse(request.httpRequest.url, true).query;
+	console.log('room:' + query['room']);
+	connection.room = query['room'];
+	connection.on('message', function(message) {
         if (message.type === 'utf8') { // accept only text
 			console.log((new Date()) + ' Received Message: ' + message.utf8Data);
         }
