@@ -22,13 +22,11 @@ var server = http.createServer(function(request, response) {
 			var body = '';
 			request.on('data', function (data) {
 				body += data;
-
+				console.log('data: ' +  data);
 				// Too much POST data, kill the connection!
 				if (body.length > 1e6)
 					request.connection.destroy();
 			});
-			
-			console.log('body now: ' + body);
 			
 			request.on('end', function () {
 				for (var i=0; i < clients.length; i++) {
