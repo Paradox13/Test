@@ -4,7 +4,7 @@
 		"socket.io": ""
 	},
 	"scripts": {
-		"start": "node post.js"
+		"start": "node notify.js"
 	},
 	"main": "notify.js"
 }
