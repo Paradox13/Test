@@ -11,21 +11,21 @@ var clients = [ ];
 
 var server = http.createServer(function(request, response) {
     
-	if (req.method === 'POST') {
+	if (request.method === 'POST') {
     var body = '';
-    req.on('data', function(chunk) {
+    request.on('data', function(chunk) {
       body += chunk;
     });
-    req.on('end', function() {
+    request.on('end', function() {
       var data = qs.parse(body);
       console.log(data);
 	  // now you can access `data.email` and `data.password`
-      res.writeHead(200);
-      res.end(JSON.stringify(data));
+      response.writeHead(200);
+      response.end(JSON.stringify(data));
     });
 	} else {
-		res.writeHead(404);
-		res.end();
+		response.writeHead(404);
+		response.end();
 	}
 	
 	var pathname = url.parse(request.url).pathname;
