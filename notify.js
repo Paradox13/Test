@@ -19,7 +19,7 @@ var server = http.createServer(function(request, response) {
 		if (query['room']!=null){
 			console.log('notify for room: ' +  query['room']);
 			console.log('HEADERS: ' + JSON.stringify(request.headers));
-			
+			console.log(request.content);
 			var count = 0;
 			var body = '';
 			request.on('data', function (data) {
