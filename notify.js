@@ -38,7 +38,7 @@ var server = http.createServer(function(request, response) {
 				console.log("Data: " + body);
 			  // now you can access `data.email` and `data.password`
 			  response.writeHead(200);
-			  response.end(JSON.stringify(data));
+			  response.end(body);
 			});
 		}
 		else{
