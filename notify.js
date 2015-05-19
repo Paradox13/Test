@@ -4,7 +4,7 @@ var webSocketsServerPort = process.env.PORT || 5000;
 // websocket and http servers
 var webSocketServer = require('websocket').server;
 var http = require('http');
-//var url = require("url");
+var url = require("url");
 qs = require('querystring');
 
 // list of currently connected clients (users)
