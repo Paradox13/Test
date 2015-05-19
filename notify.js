@@ -4,7 +4,7 @@ var webSocketsServerPort = process.env.PORT || 5000;
 // websocket and http servers
 //var webSocketServer = require('websocket').server;
 var http = require('http');
-var url = require("url");
+//var url = require("url");
 
 // list of currently connected clients (users)
 var clients = [ ];
@@ -28,7 +28,7 @@ var server = http.createServer(function(request, response) {
 		response.end();
 	}
 	
-	var pathname = url.parse(request.url).pathname;
+	/*var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	if (pathname == '/notify' && request.method == 'POST'){
 		//response.writeHead(200, {"Content-Type": "text/plain"});
@@ -58,7 +58,7 @@ var server = http.createServer(function(request, response) {
 	else{
 		response.writeHead(403);
 		response.end();
-	}
+	}*/
 });
 server.listen(webSocketsServerPort, function() {
     console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
