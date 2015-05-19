@@ -48,7 +48,7 @@ var server = http.createServer(function(request, response) {
 				}	
 				//response.write("Sent to " + count + " clients in room " + query['room']);
 				console.log("Sent to " + count + " clients in room " + query['room']);
-				console.log("Data: " + data);
+				console.log("Data: " + body);
 			}
 		}
 		else{
