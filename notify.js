@@ -9,7 +9,7 @@ var url = require("url");
 // list of currently connected clients (users)
 var clients = [ ];
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function(request, response) {
     
 	if (req.method === 'POST') {
     var body = '';
@@ -23,10 +23,42 @@ var server = http.createServer(function(req, res) {
       res.writeHead(200);
       res.end(JSON.stringify(data));
     });
-  } else {
-    res.writeHead(404);
-    res.end();
-  }
+	} else {
+		res.writeHead(404);
+		res.end();
+	}
+	
+	var pathname = url.parse(request.url).pathname;
+	console.log("Request for " + pathname + " received.");
+	if (pathname == '/notify' && request.method == 'POST'){
+		//response.writeHead(200, {"Content-Type": "text/plain"});
+		var query = url.parse(request.url, true).query;
+		if (query['room']!=null){
+			console.log('notify for room: ' +  query['room']);
+			var count = 0;
+			
+			if (body != null){
+				for (var i=0; i < clients.length; i++) {
+					if (clients[i].room == query['room']){
+						count++;
+						clients[i].sendUTF(body);
+					}
+				}	
+				//response.write("Sent to " + count + " clients in room " + query['room']);
+				console.log("Sent to " + count + " clients in room " + query['room']);
+				console.log("Body: " + body);
+			}
+		}
+		else{
+			response.write("Room not specified");
+			console.log("trying to send data without room");
+		}
+		response.end();
+	}
+	else{
+		response.writeHead(403);
+		response.end();
+	}
 });
 server.listen(webSocketsServerPort, function() {
     console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
