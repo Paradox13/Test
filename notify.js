@@ -93,7 +93,7 @@ wsServer.on('request', function(request) {
     console.log(request.origin);
 	console.log((new Date()) + ' Connection accepted.');
     // user sent some message
-    /*var query = url.parse(request.httpRequest.url, true).query;
+    var query = url.parse(request.httpRequest.url, true).query;
 	console.log('room:' + query['room']);
 	connection.room = query['room'];
 	connection.on('message', function(message) {
@@ -108,5 +108,5 @@ wsServer.on('request', function(request) {
 		// remove user from the list of connected clients
 		clients.splice(index, 1);
     });
- */
+ 
 });
