@@ -14,17 +14,15 @@ var server = http.createServer(function(request, response) {
 	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	if (pathname == '/notify' && request.method == 'POST'){
-		response.writeHead(200, {"Content-Type": "text/plain"});
+		//response.writeHead(200, {"Content-Type": "text/plain"});
 		var query = url.parse(request.url, true).query;
 		if (query['room']!=null){
 			console.log('notify for room: ' +  query['room']);
-			console.log('HEADERS: ' + JSON.stringify(request.headers));
-			console.log(request.content);
 			var count = 0;
 			var body = '';
-			request.on('data', function (data) {
-				body += data;
-				console.log('data: ' +  data);
+			request.on('data', function (chunk) {
+				body += chunk;
+				console.log('data: ' +  chunk);
 				// Too much POST data, kill the connection!
 				if (body.length > 1e6)
 					request.connection.destroy();
