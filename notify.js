@@ -67,7 +67,7 @@ server.listen(webSocketsServerPort, function() {
 /**
  * WebSocket server
  */
-var wsServer = new webSocketServer({
+/*var wsServer = new webSocketServer({
     // WebSocket server is tied to a HTTP server. WebSocket request is just
     // an enhanced HTTP request. For more info http://tools.ietf.org/html/rfc6455#page-6
     httpServer: server
@@ -108,4 +108,4 @@ wsServer.on('request', function(request) {
 		clients.splice(index, 1);
     });
  
-});
+});*/
