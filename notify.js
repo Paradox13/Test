@@ -5,6 +5,7 @@ var webSocketsServerPort = process.env.PORT || 5000;
 //var webSocketServer = require('websocket').server;
 var http = require('http');
 //var url = require("url");
+qs = require('querystring');
 
 // list of currently connected clients (users)
 var clients = [ ];
@@ -67,7 +68,7 @@ server.listen(webSocketsServerPort, function() {
 /**
  * WebSocket server
  */
-/*var wsServer = new webSocketServer({
+var wsServer = new webSocketServer({
     // WebSocket server is tied to a HTTP server. WebSocket request is just
     // an enhanced HTTP request. For more info http://tools.ietf.org/html/rfc6455#page-6
     httpServer: server
@@ -92,7 +93,7 @@ wsServer.on('request', function(request) {
     console.log(request.origin);
 	console.log((new Date()) + ' Connection accepted.');
     // user sent some message
-    var query = url.parse(request.httpRequest.url, true).query;
+    /*var query = url.parse(request.httpRequest.url, true).query;
 	console.log('room:' + query['room']);
 	connection.room = query['room'];
 	connection.on('message', function(message) {
@@ -107,5 +108,5 @@ wsServer.on('request', function(request) {
 		// remove user from the list of connected clients
 		clients.splice(index, 1);
     });
- 
-});*/
+ */
+});
