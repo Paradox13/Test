@@ -29,7 +29,7 @@ var server = http.createServer(function(request, response) {
 		response.end();
 	}
 	
-	/*var pathname = url.parse(request.url).pathname;
+	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	if (pathname == '/notify' && request.method == 'POST'){
 		//response.writeHead(200, {"Content-Type": "text/plain"});
@@ -39,15 +39,16 @@ var server = http.createServer(function(request, response) {
 			var count = 0;
 			
 			if (body != null){
+				var data = qs.parse(body);
 				for (var i=0; i < clients.length; i++) {
 					if (clients[i].room == query['room']){
 						count++;
-						clients[i].sendUTF(body);
+						clients[i].sendUTF(data);
 					}
 				}	
 				//response.write("Sent to " + count + " clients in room " + query['room']);
 				console.log("Sent to " + count + " clients in room " + query['room']);
-				console.log("Body: " + body);
+				console.log("Data: " + data);
 			}
 		}
 		else{
@@ -59,7 +60,7 @@ var server = http.createServer(function(request, response) {
 	else{
 		response.writeHead(403);
 		response.end();
-	}*/
+	}
 });
 server.listen(webSocketsServerPort, function() {
     console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
