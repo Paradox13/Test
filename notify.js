@@ -12,23 +12,6 @@ var clients = [ ];
 
 var server = http.createServer(function(request, response) {
     
-	if (request.method === 'POST') {
-    var body = '';
-    request.on('data', function(chunk) {
-      body += chunk;
-    });
-    request.on('end', function() {
-      var data = qs.parse(body);
-      console.log(data);
-	  // now you can access `data.email` and `data.password`
-      response.writeHead(200);
-      response.end(JSON.stringify(data));
-    });
-	} else {
-		response.writeHead(404);
-		response.end();
-	}
-	
 	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
 	if (pathname == '/notify' && request.method == 'POST'){
@@ -38,9 +21,13 @@ var server = http.createServer(function(request, response) {
 			console.log('notify for room: ' +  query['room']);
 			var count = 0;
 			
-			if (body != null){
-				var data = qs.parse(body);
-				for (var i=0; i < clients.length; i++) {
+			var body = '';
+			request.on('data', function(chunk) {
+			  body += chunk;
+			});
+			request.on('end', function() {
+			  console.log(body);
+			  for (var i=0; i < clients.length; i++) {
 					if (clients[i].room == query['room']){
 						count++;
 						clients[i].sendUTF(body);
@@ -49,13 +36,16 @@ var server = http.createServer(function(request, response) {
 				//response.write("Sent to " + count + " clients in room " + query['room']);
 				console.log("Sent to " + count + " clients in room " + query['room']);
 				console.log("Data: " + body);
-			}
+			  // now you can access `data.email` and `data.password`
+			  response.writeHead(200);
+			  response.end(JSON.stringify(data));
+			});
 		}
 		else{
 			response.write("Room not specified");
 			console.log("trying to send data without room");
+			response.end();
 		}
-		response.end();
 	}
 	else{
 		response.writeHead(403);
