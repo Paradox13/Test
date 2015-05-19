@@ -43,7 +43,7 @@ var server = http.createServer(function(request, response) {
 				for (var i=0; i < clients.length; i++) {
 					if (clients[i].room == query['room']){
 						count++;
-						clients[i].sendUTF(data);
+						clients[i].sendUTF(body);
 					}
 				}	
 				//response.write("Sent to " + count + " clients in room " + query['room']);
